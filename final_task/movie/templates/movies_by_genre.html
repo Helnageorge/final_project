@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<br>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h3 class="text-center mb-4 text-light">{{ genre }}</h3> <!-- Add the heading here with text-center class -->
+    </div>
+  </div>
+
+<div class="row">
+
+  {% for movie in movies %}
+
+  <div class="col md-4">
+    <div class="card w-50">
+      <div class="card-body">
+        <h5 class="card-title">{{ movie.title }}</h5>
+        <p class="card-text">Release Date: {{ movie.release_date }}</p>
+        <a href="{% url 'movie_app:movie_detail' movie.id %}" class="btn btn-primary">Click here for details</a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="text-bg-light p-3">No movies found for this category.</div>
+  {% endfor %}
+</div>
+
+{% endblock %}

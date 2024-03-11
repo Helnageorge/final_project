@@ -1,0 +1,24 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<br>
+<div class="container">
+    <div class="card bg-dark text-white">
+        <div class="card-body">
+            <h3 class="card-title" style="text-align:center;">My Profile</h3>
+
+<h2>{{ profile.username }}</h2>
+<p>First Name: {{ profile.fname }}</p>
+<p>Last Name: {{ profile.lname }}</p>
+<p>Email: {{ profile.email }}</p>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

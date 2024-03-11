@@ -1,0 +1,283 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+
+
+
+<style>
+    .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: 200px ;
+    }
+
+    .card-body {
+        flex-grow: 1;
+    }
+
+    .card-details {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+         top: 10px;
+    }
+
+    .card-info {
+        margin-bottom: 10px;
+    }
+
+    .card-info p {
+        margin: 5px 0;
+    }
+
+    .card-genres {
+        margin-bottom: 10px;
+    }
+
+    .card-genres p {
+        display: inline;
+        margin-right: 5px;
+    }
+
+    .btn-trailer {
+        margin-top: 10px;
+        margin-bottom: 2px;
+    }
+
+    .user-review {
+        bottom: 100%;
+    }
+
+    .user-review h6 {
+        margin-bottom: 5px;
+    }
+
+    .user-review p {
+        margin: 5px 0;
+    }
+
+
+</style>
+
+
+<br>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h3 class="text-center mb-4 text-light">Latest Movies</h3>
+    </div>
+</div>
+
+
+<div class="container text-center">
+<div class="row">
+
+          {% for movie in latest_movies %}
+    <div class="col-md-4" style="display: flex;">
+            <div class="col" style="margin-bottom: 20px;">
+                <div class="card h-100">
+                    <a href="{% url 'movie_app:movie_detail' movie.id %}">
+                        <img src="{{ movie.image.url }}" class="card-img-top img-fluid" alt="{{ movie.title }}">
+                    </a>
+                    <div class="card-body" style="background-color:#E5E8E8;">
+                        <div class="card-details">
+                            <h5 class="card-title">{{ movie.title }}</h5>
+                            <div class="card-info">
+                                <p>{{ movie.description }}</p><br>
+                                <p>Lead Actor: {{ movie.lead_actor }}</p>
+                                <p>Lead Actress: {{ movie.lead_actress }}</p>
+                                <p>Release Date: {{ movie.release_date }}</p>
+                                <p>Genres:
+                                    {% for genre in movie.genres.all %}
+                                    <span>{{ genre.name }}</span>{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </p>
+                            </div>
+                            <a class="btn btn-primary btn-trailer" href="{{ movie.trailer_link }}">Trailer</a>
+                        </div>
+                        <!-- Display star rating -->
+                        <div class="card-footer" style="background-color:#E5E8E8;">
+                        <div class="user-review">
+                            <h6>User Review:</h6>
+                            {% if movie.reviewrating_set.all %}
+                            {% with highest_rated_review=movie.reviewrating_set.all|dictsort:"rating"|last %}
+                            <p>{{ highest_rated_review.title }} - Rating:
+                                {% for _ in "x"|ljust:highest_rated_review.rating %}
+                                <span class="star">&#9733;</span>
+                                {% endfor %}
+                            </p>
+                            {% endwith %}
+                            {% else %}
+                            <p>No reviews yet.</p>
+                            {% endif %}
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            {% endfor %}
+
+</div><br>
+</div>
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<style>-->
+<!--    .card {-->
+<!--        display: flex;-->
+<!--        flex-direction: column;-->
+<!--        justify-content: space-between;-->
+<!--        height: 100%;-->
+<!--    }-->
+
+<!--    .card-img-top {-->
+<!--        width: 100%;-->
+<!--        height: 200px ;-->
+<!--    }-->
+
+<!--    .card-body {-->
+<!--        flex-grow: 1;-->
+<!--    }-->
+
+<!--    .card-details {-->
+<!--        padding: 20px;-->
+<!--    }-->
+
+<!--    .card-title {-->
+<!--        font-size: 1.5rem;-->
+<!--        margin-bottom: 10px;-->
+<!--         top: 10px;-->
+<!--    }-->
+
+<!--    .card-info {-->
+<!--        margin-bottom: 10px;-->
+<!--    }-->
+
+<!--    .card-info p {-->
+<!--        margin: 5px 0;-->
+<!--    }-->
+
+<!--    .card-genres {-->
+<!--        margin-bottom: 10px;-->
+<!--    }-->
+
+<!--    .card-genres p {-->
+<!--        display: inline;-->
+<!--        margin-right: 5px;-->
+<!--    }-->
+
+<!--    .btn-trailer {-->
+<!--        margin-top: 10px;-->
+<!--        margin-bottom: 2px;-->
+<!--    }-->
+
+<!--    .user-review {-->
+<!--        bottom: 100%;-->
+<!--    }-->
+
+<!--    .user-review h6 {-->
+<!--        margin-bottom: 5px;-->
+<!--    }-->
+
+<!--    .user-review p {-->
+<!--        margin: 5px 0;-->
+<!--    }-->
+
+
+<!--</style>-->
+
+
+<!--<br>-->
+
+
+<!--<div class="container text-center">-->
+<!--<div class="row">-->
+
+<!--          {% for movie in latest_movies %}-->
+<!--    <div class="col-md-4" style="display: flex;">-->
+<!--            <div class="col" style="margin-bottom: 20px;">-->
+<!--                <div class="card h-100">-->
+<!--                    <a href="{% url 'movie_app:movie_detail' movie.id %}">-->
+<!--                        <img src="{{ movie.image.url }}" class="card-img-top img-fluid" alt="{{ movie.title }}">-->
+<!--                    </a>-->
+<!--                    <div class="card-body" style="background-color:#E5E8E8;>-->
+<!--                        <div class="card-details">-->
+<!--                            <h5 class="card-title">{{ movie.title }}</h5>-->
+<!--                            <div class="card-info">-->
+<!--                                <p>{{ movie.description }}</p><br>-->
+<!--                                <p>Lead Actor: {{ movie.lead_actor }} - Lead Actress: {{ movie.lead_actress }}</p>-->
+<!--                                <p>Release Date: {{ movie.release_date }}</p>-->
+<!--                                <p>Genres:-->
+<!--                                    {% for genre in movie.genres.all %}-->
+<!--                                    <span>{{ genre.name }}</span>{% if not forloop.last %}, {% endif %}-->
+<!--                                    {% endfor %}-->
+<!--                                </p>-->
+<!--                            </div>-->
+<!--                            <a class="btn btn-primary btn-trailer" href="{{ movie.trailer_link }}">Trailer</a>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash; Display star rating &ndash;&gt;-->
+<!--                        <div class="card-footer" style="background-color:#E5E8E8;>-->
+<!--                        <div class="user-review">-->
+<!--                            <h6>User Review:</h6>-->
+<!--                            {% if movie.reviewrating_set.all %}-->
+<!--                            {% with highest_rated_review=movie.reviewrating_set.all|dictsort:"rating"|last %}-->
+<!--                            <p>{{ highest_rated_review.title }} - Rating:-->
+<!--                                {% for _ in "x"|ljust:highest_rated_review.rating %}-->
+<!--                                <span class="star">&#9733;</span>-->
+<!--                                {% endfor %}-->
+<!--                            </p>-->
+<!--                            {% endwith %}-->
+<!--                            {% else %}-->
+<!--                            <p>No reviews yet.</p>-->
+<!--                            {% endif %}-->
+<!--                        </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--            {% endfor %}-->
+
+<!--</div><br>-->
+<!--</div>-->
+
+
+
+
+
+
+
+
+
+
+

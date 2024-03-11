@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+<!--font style code-->
+<!--<link rel="preconnect" href="https://fonts.googleapis.com">-->
+<!--<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Lemon&family=Lobster&family=Roboto+Condensed:ital,wght@0,300;1,800;1,900&family=Tektur&display=swap" rel="stylesheet">
+
+       <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/4bf8f42f83.js" crossorigin="anonymous"></script>
+
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<style>
+    .alert {
+        padding: 10px;
+
+        margin-bottom: 15px;
+       }
+    </style>
+
+
+<body class="d-flex flex-column min-vh-100" style="background-color: black;">
+<!-- Bootstrap JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    {% include 'nav.html' %}
+
+<div class="container">
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script>
+        // Hide the login message after 5 seconds
+        setTimeout(function(){
+            var loginMessage = document.querySelector('.alert');
+            if (loginMessage) {
+                loginMessage.style.display = 'none';
+            }
+        }, 5000);
+    </script>
+    {% include 'footer.html' %}
+</body>
+
+</html>

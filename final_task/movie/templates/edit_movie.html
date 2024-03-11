@@ -1,0 +1,33 @@
+<!-- edit_movie.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<br>
+<div class="container">
+    <div class="card bg-dark text-white">
+        <div class="card-body">
+            <h3 class="card-title" style="text-align:center;">Edit Movie</h3>
+
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+
+        {% if field.errors %}
+          <ul class="errorlist">
+            {% for error in field.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+  </form>
+{% endblock %}
+

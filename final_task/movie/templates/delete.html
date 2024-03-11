@@ -1,0 +1,21 @@
+<!-- confirm_delete.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<div class="container d-flex justify-content-center align-items-center" >
+    <div class="card bg-dark text-white">
+        <div class="card-body">
+          <h3 class="card-title" style="text-align:center;">Confirm Delete</h3>
+
+          <p>Are you sure you want to delete "{{ movie.title }}"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="{% url 'movie_app:movie_detail' movie.pk %}" class="btn btn-secondary">Cancel</a>
+  </form>
+        </div>
+        </div>
+        </div>
+{% endblock %}

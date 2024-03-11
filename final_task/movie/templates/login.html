@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<style>
+
+    .alert {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+/* Add more styles for other message types if needed */
+
+
+</style>
+
+
+<!--<br>-->
+<!--<div class="container">-->
+<!--    <div class="row justify-content-center">-->
+<!--        <div class="col-md-6" style="background-color:grey;">-->
+<!--            <form action="{% url 'register_app:login' %}" method="post" style="margin-top:30px;margin-bottom:30px;">-->
+<!--                {% csrf_token %}-->
+<!--                <div class="mb-3">-->
+<!--                    <label class="form-label">Enter User Name </label>-->
+<!--                    <input type="text" class="form-control" name="username" placeholder="User Name" required>-->
+<!--                </div>-->
+<!--                <div class="mb-3">-->
+<!--                    <label class="form-label">Enter Password</label>-->
+<!--                    <input type="password" class="form-control" name="password" placeholder="Enter your password" required>-->
+<!--                </div>-->
+<!--                <input type="submit" class="btn btn-primary" value="Login">-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6" style="background-color: grey;">
+            <form action="{% url 'register_app:login' %}" method="post" style="margin-top: 30px; margin-bottom: 30px;">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Enter User Name </label>
+                    <input type="text" class="form-control" name="username" placeholder="User Name" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Enter Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="Enter your password" required>
+                </div>
+                <input type="submit" class="btn btn-primary" value="Login">
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,66 @@
+
+
+
+
+
+.my_footer{
+
+    background-color:#F9EBEA;
+    height:30px;
+
+}
+
+.my_footer p{
+    padding-top:8px;
+    font-size:15px;
+
+
+
+}
+
+.rating-list li {
+  float: right;
+  color: #ddd;
+  padding: 10px 5px;
+}
+
+.rating-list li:hover,
+.rating-list li:hover ~ li {
+  color: orange;
+}
+
+.rating-list {
+  display: inline-block;
+  list-style: none;
+}
+
+.checked {
+  color: orange;
+}
+
+.slider-controls {
+  text-align: center;
+}
+
+.slider-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #333;
+  border-radius: 50%;
+  margin: 0 5px;
+}
+
+.slider-dot.active {
+  background-color: #ccc;
+}
+
+
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
+
+

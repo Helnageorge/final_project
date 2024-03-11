@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: 400px;
+    }
+
+    .card-body {
+        flex-grow: 1;
+        background-color:#E5E8E8;
+    }
+
+    .card-details {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+         top: 10px;
+    }
+
+    .card-info {
+        margin-bottom: 10px;
+    }
+
+    .card-info p {
+        margin: 5px 0;
+    }
+
+    .card-genres {
+        margin-bottom: 10px;
+    }
+
+    .card-genres p {
+        display: inline;
+        margin-right: 5px;
+    }
+
+    .btn-trailer {
+        margin-top: 10px;
+        margin-bottom: 2px;
+    }
+
+    .user-review {
+        bottom: 100%;
+    }
+
+    .user-review h6 {
+        margin-bottom: 5px;
+    }
+
+    .user-review p {
+        margin: 5px 0;
+    }
+
+#upcomingMoviesCarousel {
+        max-width: 800px; /* Adjust the maximum width as needed */
+        margin: 0 auto; /* Center the carousel */
+    }
+
+    #upcomingMoviesCarousel img {
+        height: 400px; /* Adjust the height as needed */
+        width: 100%; /* Set the width to fill the container */
+
+    }
+
+
+</style>
+
+
+<br>
+<section id="upcoming-movies" class="bg-dark py-5">
+    <div class="container">
+        <h2 class="text-center mb-4 text-light">Upcoming Movies</h2>
+
+        <div id="upcomingMoviesCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                {% for movie in upcoming_movies %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <a href="{% url 'movie_app:movie_detail' movie.id %}">
+                    <img src="{{ movie.image.url }}" class="d-block" alt="{{ movie.title }}">
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Previous and Next buttons -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#upcomingMoviesCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#upcomingMoviesCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'movie_app:all_upcoming_movies' %}" class="btn btn-primary">View All Upcoming Movies</a>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+<!-- Latest Movies Section -->
+<section id="latest-movies" class="bg-dark py-5">
+    <div class="container">
+        <h2 class="text-center mb-4 text-light">Latest Movies</h2>
+        <div class="row">
+            <!-- Add latest movie cards here -->
+            {% for movie in latest_movies|slice:":3" %}
+            <div class="col">
+                <div class="card h-100">
+                    <a href="{% url 'movie_app:movie_detail' movie.id %}">
+                        <img src="{{ movie.image.url }}" class="card-img-top img-fluid" alt="{{ movie.title }}">
+                    </a>
+                    <div class="card-body">
+                        <div class="card-details">
+                            <h5 class="card-title">{{ movie.title }}</h5>
+                            <div class="card-info">
+                                <p>{{ movie.description }}</p><br>
+                                <p>Lead Actor: {{ movie.lead_actor }}</p>
+                                <p> Lead Actress: {{ movie.lead_actress }}</p>
+                                <p>Release Date: {{ movie.release_date }}</p>
+                                <p>Genres:
+                                    {% for genre in movie.genres.all %}
+                                    <span>{{ genre.name }}</span>{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </p>
+                            </div>
+                            <a class="btn btn-primary btn-trailer" href="{{ movie.trailer_link }}">Trailer</a>
+                        </div>
+                        <!-- Display star rating -->
+                        <div class="card-footer" style="background-color:#E5E8E8;">
+                        <div class="user-review">
+                            <h6>User Review:</h6>
+                            {% if movie.reviewrating_set.all %}
+                            {% with highest_rated_review=movie.reviewrating_set.all|dictsort:"rating"|last %}
+                            <p>{{ highest_rated_review.title }} - Rating:
+                                {% for _ in "x"|ljust:highest_rated_review.rating %}
+                                <span class="star">&#9733;</span>
+                                {% endfor %}
+                            </p>
+                            {% endwith %}
+                            {% else %}
+                            <p>No reviews yet.</p>
+                            {% endif %}
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'movie_app:all_latest_movies' %}" class="btn btn-primary">View All Latest Movies</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="card bg-dark text-white">
+        <div class="card-body">
+            <h3 class="card-title" style="text-align:center;">Delete Review</h3>
+            <div class="container">
+                <p>Are you sure you want to delete this review?</p>
+                <p>Movie: {{ review.movie.title }}</p>
+                <p>User: {{ review.user.username }}</p>
+                <p>Rating: {{ review.rating }}</p>
+                <p>Comment: {{ review.content }}</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <a href="{% url 'movie_app:movie_detail' pk=review.movie.pk %}" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
