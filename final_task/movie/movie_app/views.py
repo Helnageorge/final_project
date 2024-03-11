@@ -44,7 +44,7 @@ def all_upcoming_movies(request):
 
 
 def add_review(request):
-    movies = Movie.objects.all()
+    movies = Movie.objects.exclude(release_status='upcoming')  # Exclude movies with release_status='upcoming'
     categories = Category.objects.all()
     if request.method == 'POST':
         movie_id = request.POST.get('movie_id')
@@ -61,7 +61,7 @@ def add_review(request):
             return HttpResponse("Error: Please select a movie.")
     else:
         form = ReviewRatingForm()
-    return render(request, 'addreview.html', {'form': form, 'movies': movies,'user': request.user})
+    return render(request, 'addreview.html', {'form': form, 'movies': movies, 'user': request.user})
 
 def add(request):
     if request.method == 'POST':
